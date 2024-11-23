@@ -3,7 +3,6 @@ import 'package:flutter_course/core/shared_preferences/my_shared.dart';
 import 'package:flutter_course/core/utils/safe_print.dart';
 import 'package:dio/dio.dart';
 
-
 class DioInterceptor extends Interceptor {
   Dio dio = Dio(BaseOptions(baseUrl: ApiConstants.baseUrl));
   String? token;
@@ -13,14 +12,10 @@ class DioInterceptor extends Interceptor {
     options.headers.addAll({
       "lang": MyShared.getCurrentLanguage(),
       "Content-Type": "application/json",
-      "Authorization": "Bearer $token",
+      "Authorization": "$token",
     });
-    options.headers.addAll({
-      "Authorization": "Bearer $token",
-    });
-        return super.onRequest(options, handler);
+    return super.onRequest(options, handler);
   }
-
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
@@ -31,9 +26,11 @@ class DioInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     // Log the error details
     if (err.response != null) {
-      safePrint("ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path} => MESSAGE: ${err.response?.data}");
+      safePrint(
+          "ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path} => MESSAGE: ${err.response?.data}");
     } else {
-      safePrint("ERROR => PATH: ${err.requestOptions.path} => MESSAGE: ${err.message}");
+      safePrint(
+          "ERROR => PATH: ${err.requestOptions.path} => MESSAGE: ${err.message}");
     }
     // Error handling logic
     String errorMessage;
@@ -44,7 +41,8 @@ class DioInterceptor extends Interceptor {
         errorMessage = "Connection timed out. Please try again later.";
         break;
       case DioExceptionType.badResponse:
-        errorMessage = err.response?.data['message'] ?? "Received an invalid response.";
+        errorMessage =
+            err.response?.data['message'] ?? "Received an invalid response.";
         break;
       case DioExceptionType.cancel:
         errorMessage = "Request was cancelled.";
@@ -59,8 +57,10 @@ class DioInterceptor extends Interceptor {
 
     handler.resolve(Response(
       requestOptions: err.requestOptions,
-      data: {"message": errorMessage}, // Return a Flutter widget as an error message.
+      data: {
+        "message": errorMessage
+      }, // Return a Flutter widget as an error message.
       statusCode: err.response?.statusCode,
     ));
-}
   }
+}

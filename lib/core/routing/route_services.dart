@@ -1,5 +1,7 @@
+import 'package:flutter_course/core/routing/routes.dart';
 import 'package:flutter_course/core/utils/safe_print.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_course/features/splash/splash.dart';
 
 class RouteServices {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -7,9 +9,9 @@ class RouteServices {
     safePrint('generateRoute => ${routeSettings.arguments}');
 
     switch (routeSettings.name) {
-      case "/":
+      case Routes.splash:
         return MaterialPageRoute(
-          builder: (_) =>  Container(),
+          builder: (_) =>  const SplashScreen(),
         );
       default:
         return _errorRoute();

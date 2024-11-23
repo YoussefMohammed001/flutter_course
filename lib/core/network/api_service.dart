@@ -5,12 +5,6 @@ import 'package:flutter_course/core/utils/safe_print.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'dio_interceptor.dart';
 
-
-
-
-
-
-
 class ApiService {
   static late Dio dio;
   static init() {

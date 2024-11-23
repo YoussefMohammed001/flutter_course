@@ -32,7 +32,6 @@ final String image,name,price,oldPrice,inFav,inCart,storeName;
       ),
       child: isLoading ? _buildShimmer() : InkWell(
           onTap: (){
-            pushNamed(context, Routes.productDetailsScreen);
           },
           child: _buildContent()), // Use shimmer or content based on loading state
     );
